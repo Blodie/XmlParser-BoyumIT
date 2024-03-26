@@ -3,11 +3,11 @@
 public class FileValidator : IValidator<IFormFile>
 {
     private const int ONE_MB_IN_BYTES = 1024 * 1024;
-    private readonly long _maxFileSizeBytes;
+    private readonly double _maxFileSizeBytes;
 
     public FileValidator(double maxFileSizeMB)
     {
-        _maxFileSizeBytes = (long)(maxFileSizeMB * ONE_MB_IN_BYTES);
+        _maxFileSizeBytes = maxFileSizeMB * ONE_MB_IN_BYTES;
     }
 
     public ValidationResult Validate(IFormFile file)
