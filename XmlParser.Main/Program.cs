@@ -2,13 +2,19 @@ using System.Globalization;
 
 using XmlParser.Main.Mappers;
 using XmlParser.Main.Models;
+using XmlParser.Main.Validators;
 using XmlParser.Main.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IMapper<WebOrder, WebOrderViewModel>, WebOrderMapper>();
-
 // Add services to the container.
+
+builder.Configuration.AddJsonFile("appsettings.json", optional: false);
+
+builder.Services.AddSingleton<IMapper<WebOrder, WebOrderViewModel>, WebOrderMapper>();
+builder.Services.AddSingleton<IValidator<IFormFile>, FileValidator>(x => new FileValidator(builder.Configuration.GetValue<double>("MaxFileSizeMB")));
+builder.Services.AddSingleton<IValidator<WebOrder>, WebOrderValidator>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
