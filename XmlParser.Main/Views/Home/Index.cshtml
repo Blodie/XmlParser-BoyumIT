@@ -25,50 +25,54 @@
         }
     </section>
 
-
-    @if (Model is not null)
-    {
-        <div>
-            <h4>Result</h4>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Id)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Id)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Customer)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Customer)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Date)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Date)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Average)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Average)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Total)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Total)
-                </dd>
-            </dl>
-        </div>
-    }
+    <section id="result">
+        @if (Model is not null)
+        {
+            <div>
+                <h4>Result</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Id)
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Customer)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Customer)
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Date)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Date)
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Average)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Average)
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Total)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Total)
+                    </dd>
+                </dl>
+            </div>
+        }
+    </section>
 </div>
 
 <script>
     function validateFile() {
+        const resultSection = document.querySelector('#result');
+        resultSection.innerHTML = '';
+
         const fileInput = document.querySelector('#file-input');
         const errorSection = document.querySelector('#errors');
 

@@ -37,3 +37,6 @@
 ### Should I add validation?
 - Yes there should be form validation both client side and server side.
 - Just like I did with mapping, I am not going to use an external nuget package, rather I'll make my own validators.
+
+### Should I add unit tests?
+- Yes, we can test the mappers and validators.
