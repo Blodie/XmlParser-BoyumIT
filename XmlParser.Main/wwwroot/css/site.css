@@ -35,3 +35,10 @@ body {
         width: 100vw;
     }
 }
+
+.error {
+    color: red;
+    margin: 0;
+    font-size: 14px;
+    font-style: italic;
+}

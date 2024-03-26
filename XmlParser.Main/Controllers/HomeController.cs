@@ -20,17 +20,20 @@ public class HomeController : Controller
     public HomeController(ILogger<HomeController> logger,
                           IMapper<WebOrder, WebOrderViewModel> webOrderMapper,
                           IValidator<IFormFile> fileValidator,
-                          IValidator<WebOrder> webOrderValidator)
+                          IValidator<WebOrder> webOrderValidator,
+                          IConfiguration configuration)
     {
         _logger = logger;
         _webOrderMapper = webOrderMapper;
         _fileValidator = fileValidator;
         _webOrderValidator = webOrderValidator;
+
+        ViewBag.MaxFileSizeMB = configuration.GetValue<double>("MaxFileSizeMB");
     }
 
     public IActionResult Index()
 	{
-		return View();
+        return View();
 	}
 
     [HttpPost]

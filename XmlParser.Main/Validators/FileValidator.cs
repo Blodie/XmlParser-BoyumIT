@@ -21,7 +21,7 @@ public class FileValidator : IValidator<IFormFile>
 
         if (file.ContentType is not "text/xml")
         {
-            validationResult.Errors.Add($"File's content type is not text/xml");
+            validationResult.Errors.Add($"Please select an .XML file");
         }
 
         return validationResult;

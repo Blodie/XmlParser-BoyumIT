@@ -1,52 +1,115 @@
-﻿@model XmlParser.Main.ViewModels.WebOrderViewModel
+﻿@inject IConfiguration Configuration
+@model XmlParser.Main.ViewModels.WebOrderViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<form class="align-mid width-50 p-3" method="post" enctype="multipart/form-data" action="/">
-    <label for="file" class="form-label">Input Web Order</label>
-    <div class="input-group mb-6">
-        <input class="form-control" type="file" name="file" accept=".xml">
-        <button type="submit" class="btn btn-primary">Process</button>
-    </div>
-</form>
+<div class="align-mid width-50 p-3">
+    <form id="xml-form" class="pb-3" method="post" enctype="multipart/form-data" action="/">
+        <label for="file" class="form-label">Input Web Order</label>
+        <div class="input-group mb-6">
+            <input id="file-input" class="form-control" type="file" name="file" accept=".xml">
+            <button type="button" class="btn btn-primary" onclick="validateFile()">Process</button>
+        </div>
+    </form>
 
-@if (Model is not null)
-{
-    <div class="align-mid width-50 p-3">
-        <h4>Result</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Id)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Id)
-            </dd>
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Customer)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Customer)
-            </dd>
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Date)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Date)
-            </dd>
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Average)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Average)
-            </dd>
-            <dt class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Total)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Total)
-            </dd>
-        </dl>
-    </div>
-}
+    <section id="errors">
+        @if (ViewBag.Errors is not null)
+        {
+            <div class="pb-3">
+                @foreach (string error in ViewBag.Errors)
+                {
+                    <p class="error">*@error</p>
+                }
+            </div>
+        }
+    </section>
+
+
+    @if (Model is not null)
+    {
+        <div>
+            <h4>Result</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Customer)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Customer)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Average)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Average)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Total)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Total)
+                </dd>
+            </dl>
+        </div>
+    }
+</div>
+
+<script>
+    function validateFile() {
+        const fileInput = document.querySelector('#file-input');
+        const errorSection = document.querySelector('#errors');
+
+        // Check if file is selected
+        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            errorSection.innerHTML = 
+                `
+                    <div class="pb-3">
+                        <p class="error">*No file selected</p>
+                    </div>
+                `
+            return;
+        }
+
+        const file = fileInput.files[0];
+
+        // Check file extension
+        if (!file.name.toUpperCase().endsWith('.XML')) {
+            errorSection.innerHTML =
+                `
+                    <div class="pb-3">
+                        <p class="error">*Please select an .XML file</p>
+                    </div>
+                `
+            return;
+        }
+
+        // Check file size
+        const maxSizeMB = @Html.Raw(Json.Serialize(Configuration.GetValue<double>("MaxFileSizeMB")));
+        const maxSizeBytes = 1024 * 1024 * maxSizeMB;
+        if (file.size > maxSizeBytes) {
+            errorSection.innerHTML =
+                `
+                    <div class="pb-3">
+                        <p class="error">*File size exceeds ${maxSizeMB}MB</p>
+                    </div>
+                `
+            return;
+        }
+
+        // If all validations pass, submit the form
+        document.querySelector('#xml-form').submit();
+    }
+</script>
