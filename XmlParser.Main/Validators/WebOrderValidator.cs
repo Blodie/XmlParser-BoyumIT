@@ -14,6 +14,12 @@ public class WebOrderValidator : IValidator<WebOrder>
             return validationResult;
         }
 
+        if (model.Items!.Any(item => item is null))
+        {
+            validationResult.Errors.Add($"{nameof(WebOrder)} {nameof(WebOrder.Items)} containing null is invalid");
+            return validationResult;
+        }
+
         if (model.Items!.Any(item => item.Price < 0))
         {
             validationResult.Errors.Add($"{nameof(WebOrder)} {nameof(WebOrder.Items)} with negative price are invalid");
