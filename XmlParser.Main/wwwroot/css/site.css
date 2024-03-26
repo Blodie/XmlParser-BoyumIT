@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.align-mid {
+    margin: 0 50%;
+    transform: translate(-50%, 0);
+}
+
+.width-50 {
+    width: 50vw;
+}
+
+@media screen and (max-width: 800px) {
+    .width-50 {
+        width: 100vw;
+    }
+}

@@ -27,3 +27,9 @@
 ### I have to find the correct culture to display the Total and Average numbers properly.
 - Found it, its the danish culture. Should I set it to default on the whole application? Or just on these 2 properties specifically?
 - I decided to use the culture globally, I think thats closer to a real world scenario.
+
+### Should I add responsive UI?
+- I don't see why not, should be very easy with how small this application is.
+
+### Should I set up minifying and bundleing?
+- There is not much css and javascript in this application, don't really see a huge benefit in doing it.
