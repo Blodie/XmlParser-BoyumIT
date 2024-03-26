@@ -6,13 +6,7 @@ public class WebOrderViewModel
 {
     public int Id { get; set; }
     public string? Customer { get; set; }
-
-	[DisplayFormat(DataFormatString = "{0:dd. MMMM. yyyy}")]
-    public DateOnly Date { get; set; }
-
-    [DisplayFormat(DataFormatString = "{0:#,###.000}")]
-    public decimal Total { get; set; }
-
-    [DisplayFormat(DataFormatString = "{0:#,###.000}")]
-    public decimal Average { get; set; }
+    public string? Date { get; set; }
+    public string? Total { get; set; }
+    public string? Average { get; set; }
 }
