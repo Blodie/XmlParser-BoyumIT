@@ -1,4 +1,10 @@
+using XmlParser.Main.Mappers;
+using XmlParser.Main.Models;
+using XmlParser.Main.ViewModels;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IMapper<WebOrder, WebOrderViewModel>, WebOrderMapper>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

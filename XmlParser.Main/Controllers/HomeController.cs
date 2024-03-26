@@ -3,17 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Xml.Serialization;
 
+using XmlParser.Main.Mappers;
 using XmlParser.Main.Models;
+using XmlParser.Main.ViewModels;
 
 namespace XmlParser.Main.Controllers;
 public class HomeController : Controller
 {
     private const int MAX_FILE_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB in bytes
 	private readonly ILogger<HomeController> _logger;
+    private readonly IMapper<WebOrder, WebOrderViewModel> _webOrderMapper;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IMapper<WebOrder, WebOrderViewModel> webOrderMapper)
     {
         _logger = logger;
+        _webOrderMapper = webOrderMapper;
     }
 
     public IActionResult Index()
@@ -25,7 +29,13 @@ public class HomeController : Controller
     public IActionResult Index(IFormFile file)
 	{
         var webOrder = ProcessXml(file);
-		return View(webOrder);
+        if (webOrder is null)
+        {
+            return View();
+        }
+
+        var webOrderViewModel = _webOrderMapper.MapToViewModel(webOrder);
+		return View(webOrderViewModel);
 	}
 
 	public IActionResult Privacy()
