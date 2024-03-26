@@ -3,7 +3,7 @@
 namespace XmlParser.Main.Models;
 
 [XmlRoot("Item")]
-public class WebOrderItem
+public class Item
 {
 	[XmlAttribute("id")]
 	public string Id { get; set; } = default!;

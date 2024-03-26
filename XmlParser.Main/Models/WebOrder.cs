@@ -11,16 +11,9 @@ public class WebOrder
 	[XmlElement("Customer")]
 	public string? Customer { get; set; }
 
-	[XmlIgnore]
-    public DateOnly Date
-	{
-		get => DateOnly.TryParseExact(DateString, "yyyyMMdd", out var date) ? date : default; 
-		set => DateString = value.ToString("yyyyMMdd"); 
-	}
-
 	[XmlElement("Date")]
-	public string? DateString { get; set; }
+	public string? Date { get; set; }
 
 	[XmlArray("Items")]
-	public List<WebOrderItem>? Items { get; set; }
+	public List<Item>? Items { get; set; }
 }
