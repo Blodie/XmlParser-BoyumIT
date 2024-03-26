@@ -1,3 +1,5 @@
+using System.Globalization;
+
 using XmlParser.Main.Mappers;
 using XmlParser.Main.Models;
 using XmlParser.Main.ViewModels;
@@ -10,6 +12,10 @@ builder.Services.AddSingleton<IMapper<WebOrder, WebOrderViewModel>, WebOrderMapp
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+var cultureInfo = CultureInfo.CreateSpecificCulture("da-DK");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
